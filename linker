@@ -1,0 +1,122 @@
+__destroy_global_chain = 0x80337dc0;
+__register_global_object = 0x80337e08;
+__destroy_new_array = 0x80337e20;
+__destroy_arr = 0x80337e9c;
+__construct_array = 0x80337f14;
+__dt__26__partial_array_destructorFv = 0x80338014;
+__construct_new_array = 0x803380cc;
+__ptmf_test = 0x803381d4;
+__ptmf_scall = 0x80338204;
+__unregister_fragment = 0x8033822c;
+__register_fragment = 0x80338260;
+__dt__26__partial_array_destructorFv = 0x80338014;
+__cvt_fp2unsigned = 0x8033829c;
+exit = 0x80338978;
+rand = 0x8033b1a4;
+srand = 0x8033b19c;
+long2str = 0x8033aaa0;
+longlong2str = 0x8033a7c0;
+round_decimal = 0x8033a68c;
+float2str = 0x8033a054;
+toupper = 0x80338f3c;
+tolower = 0x80338f64;
+__num2dec = 0x80338a84;
+__flush_buffer = 0x80338e38;
+__prep_buffer = 0x80338f04;
+__kill_critical_regions = 0x80338f38;
+__div2u = 0x803382f8;
+__div2i = 0x803383e4;
+__mod2u = 0x8033851c;
+__mod2i = 0x80338600;
+__shl2i = 0x8033870c;
+__shr2u = 0x80338730;
+__shr2i = 0x80338754;
+__cvt_sll_flt = 0x8033877c;
+__cvt_dbl_usll = 0x80338830;
+GetR2__Fv = 0x803388fc;
+__fini_cpp_exceptions = 0x80338904;
+__init_cpp_exceptions = 0x80338938;
+fwrite = 0x80338f8c;
+wcstombs = 0x80339268;
+memcmp = 0x803392a4;
+memchr = 0x803392e8;
+memmove = 0x80339314;
+__copy_longs_rev_unaligned = 0x803393f0;
+__copy_longs_unaligned = 0x803394a0;
+__copy_longs_rev_aligned = 0x80339564;
+__copy_longs_aligned = 0x80339610;
+__stdio_atexit = 0x803396cc;
+sprintf = 0x803396d0;
+snprintf = 0x803397a4;
+vsnprintf = 0x80339874;
+vprintf = 0x803398e4;
+__StringWrite = 0x80339960;
+__FileWrite = 0x803399cc;
+__pformatter = 0x80339a24;
+parse_format = 0x8033acc4;
+__StringRead = 0x8033b1c8;
+strstr = 0x8033b258;
+strrchr = 0x8033b30c;
+strchr = 0x8033b30c;
+strcmp = 0x8033b33c;
+strcat = 0x8033b460;
+strncpy = 0x8033b48c;
+strcpy = 0x8033b4d0;
+strlen = 0x8033b584;
+strtol = 0x8033b5a4;
+strtoul = 0x8033b694;
+__strtoul = 0x8033b740;
+__close_console = 0x8033ba88;
+__write_console = 0x8033ba90;
+__read_console = 0x8033bb28;
+fwide = 0x8033bc08;
+fabs__Fd = 0x8033bc88;
+__ieee754_atan2 = 0x8033bc90;
+atan = 0x8033bf28;
+frexp = 0x8033c168;
+atan2 = 0x8033c204;
+fabsf__Ff = 0x8033c224;
+atanf = 0x8033c22c;
+atan__Ff = 0x8033c420;
+_inv_sqrtf = 0x8033c440;
+acosf = 0x8033c4b0;
+atan2f = 0x8033c4f4;
+tanf = 0x8033c5cc;
+cos__Ff = 0x8033c610;
+sin__Ff = 0x8033c630;
+cosf = 0x8033c650;
+sinf = 0x8033c7e4;
+__sinit_trigf_c = 0x8033c988;
+powf = 0x8033c9b8;
+expf = 0x8033d0f8;
+memset = 0x80003100;
+__fill_mem = 0x80003130;
+memcpy = 0x800031f4;
+__nw__FUl = 0x802c3ba4;
+__nw__FUli = 0x802c3bec;
+__nwa__FUl = 0x802c3ca4;
+__nwa__FUli = 0x802c3cec;
+__dl__FPv = 0x802c3da4;
+__dla__FPv = 0x802c3e08;
+
+SECTIONS
+{
+    . = 0x817fa000;
+    .text : 
+    {
+        *(.text)
+    }
+	.rodata :
+	{
+		*(.rodata*)
+	}
+	.data :
+	{
+		*(.data)
+	}
+	. += 0x08;
+	.sdata :
+	{
+		*(.sdata)
+	}
+}
