@@ -1,6 +1,9 @@
 # Super-Mario-Sunshine-C-Kit
 A WIP C library for everyone's favorite game: Super Mario Sunshine.
 
+TODO: Add more examples.. (Please)
+TODO: Actually fix the code listed in the main example.
+
 What can this do? 
 
 You can make Gecko code modifications in C for Super Mario Sunshine, and Super Mario Sunshine only, for now. (I'll probably make another kit for some other games in the future, though only me working on them; I don't want to involve Miluaces into the pain. ^ ^' ) 
