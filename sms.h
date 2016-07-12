@@ -1,3 +1,8 @@
+ //For C++ inheritence
+#define GetObjectFunction( object, func ) (void*)*(void**)((int)*(int*)object + func)
+#define Director_GameUpdate 0x64
+#define HitActor_TouchPlayer 0x0148
+
 #ifndef SMS_H
 	#define SMS_H
 
