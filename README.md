@@ -1,4 +1,4 @@
-# Super-Mario-Sunshine-C-Kit
+# Super Mario Sunshine - C Kit
 A WIP C library for everyone's favorite game: Super Mario Sunshine.
 
 TODO: Add more examples.. (Please)
