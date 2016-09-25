@@ -1,10 +1,9 @@
- //For C++ inheritence
-#define GetObjectFunction( object, func ) (void*)*(void**)((int)*(int*)object + func)
-#define Director_GameUpdate 0x64
-#define HitActor_TouchPlayer 0x0148
-
 #ifndef SMS_H
 	#define SMS_H
+
+	#include <stdlib.h>
+	#include <stdint.h>
+	#include <stdarg.h>
 
 	#define PRESS_START	0x1000
 	#define PRESS_B		0x0200
@@ -19,7 +18,8 @@
 
 	#define MARIOFLAG_ALIVE						0x00000001
 	#define MARIOFLAG_INVISIBLE					0x00000004
-	#define MARIOFLAG_DEAD						0x00000040
+	#define MARIOFLAG_ALLDEAD					0x00000F00
+	#define MARIOFLAG_GAMEOVER					0x00000400
 	#define MARIOFLAG_SLIP						0x00000080
 	#define MARIOFLAG_HASHELMET_FOLLOWCAMERA	0x00001000
 	#define MARIOFLAG_HASHELMET					0x00002000
@@ -62,14 +62,23 @@
 
 typedef struct{
 	uint16_t buttons;
-	uint8_t lanalogx;
-	uint8_t lanalogy;
-	uint8_t ranalogx;
-	uint8_t ranalogy;
+	int8_t lanalogx;
+	int8_t lanalogy;
+	int8_t ranalogx;
+	int8_t ranalogy;
 	uint16_t u1;
 	uint8_t status;
 	uint8_t u2;
-} Controller;
+	uint8_t u3;
+	uint8_t u4;
+} __attribute__((packed)) Controller;
+
+typedef struct{
+	void* type;
+	void* u1[55];
+	int u2;
+	int u3[7];
+} MarioGamePad;
 
 // MarDirector* mardirector = (MarDirector*)(r13 + 0x9FB8)
 typedef struct{
@@ -96,7 +105,7 @@ typedef struct{
 	void* u8;
 	void* u9;
 	int u10;
-	int u11;
+	int collision;
 	float u12;
 	float u13;
 	float u14;
@@ -109,45 +118,128 @@ typedef struct{
 } HitActor;
 
 typedef struct{
-	void* Type;
+	void* Type;			//0
 	void* u2;
 	int u3;
-	int u4;
-	Vector position;
+	int u4;	
+	Vector position;	//10
 	int u5;
-	void* u6;
+	void* u6;			//20
 	Vector scale;
-	Vector direction;
+	Vector direction;	//30
 	void* u7;
-	void* u8;
-	void* u9;
-	int u10;
-	int u11;
-	float u12;
+	void* u8;			//40
+	void* collist;
+	uint16_t colcount;
+	uint16_t u9;
+	int colsettings;
+	float u12;			//50
 	float u13;
 	float u14;
 	float u15;
-	float u16;
+	float u16;			//60
 	int u17;
 	int u18;
 	int u19;
-	void* u20;
+	void* u20;			//70
 	int u21;
 	int u22;
 	uint32_t status;
-	uint32_t laststatus;
+	uint32_t laststatus;//80
 	int statustime;
+	void* u23[36];		//88
+	int flags;			//118
+	void* u24[64];
+	char name[16];		//218
+	void* u25[180];		//228
+	MarioGamePad* gamepad; //4fc
 } MarioActor;
 
-typedef struct{
-	float u1;
-	float u2;
-	float u3;
-	float u4;
-	float x;
-	float y;
-	float z;
-} Position;
+struct EMario_t;
+struct EnemyMario_t;
+
+typedef struct EnemyMario_t{
+	void* Type;			//0
+	void* u2;
+	int u3;
+	int u4;	
+	Vector position;	//10
+	int u5;
+	void* u6;			//20
+	Vector scale;
+	Vector direction;	//30
+	void* u7;
+	void* u8;			//40
+	void* collist;
+	uint16_t colcount;
+	uint16_t u9;
+	int colsettings;
+	float u12;			//50
+	float u13;
+	float u14;
+	float u15;
+	float u16;			//60
+	int u17;
+	int u18;
+	int u19;
+	void* u20;			//70
+	int u21;
+	int u22;
+	uint32_t status;
+	uint32_t laststatus;//80
+	int statustime;
+	void* u23[36];		//88
+	int flags;			//118
+	void* u24[64];
+	char name[16];		//218
+	void* u25[180];		//228
+	MarioGamePad* gamepad; //4fc
+	void* u26[3940];
+	uint16_t emarioflags;
+	uint16_t emariodamage;	//4294
+	uint16_t emariohealth;	//4296
+	uint16_t u27;			//4298
+	int u28;
+	int u29;
+	struct EMario_t* emario;
+	int u30;
+	int u31;
+	float u32;
+	float u33;
+	uint16_t u34;
+	uint16_t u35;
+	uint16_t u36;
+	uint16_t hpmetertimer;
+} __attribute__((packed)) EnemyMario;
+
+typedef struct EMario_t{
+	void* Type;			//0
+	void* u2;
+	int u3;
+	int u4;	
+	Vector position;	//10
+	int u5;
+	void* u6;			//20
+	Vector scale;
+	Vector direction;	//30
+	void* u7;
+	void* u8;			//40
+	void* collist;
+	uint16_t colcount;
+	uint16_t u9;
+	int colsettings;
+	float u12;			//50
+	float u13;
+	float u14;
+	float u15;
+	float u16;			//60
+	int u17;
+	int u18;
+	int u19;
+	void* u20;			//70
+	void* u21[55];
+	EnemyMario* enemymario;
+} __attribute__((packed)) EMario;
 
 #define ITEMFLAG_STATIC 0x00000010
 
@@ -235,10 +327,26 @@ typedef struct {
 	void* type;
 } PollutionManager;
 typedef struct {
+	void* type;
+} ItemManager;
+typedef struct {
+	void* type;
+	void* u1;
+	int flags1;
+	int flags2;
+	int timer;
+} TrembleModelEffect;
+typedef struct {
 	float a1[4];
 	float a2[4];
 	float a3[4];
 } A3_A4_f;
+
+//For C++ inheritence
+#define GetObjectFunction( object, func ) (void*)*(void**)((int)*(int*)object + func)
+#define Director_GameUpdate 0x64
+#define HitActor_TouchPlayer 0x0148
+#define HitActor_ReceiveMessage 0xA0
 
 //Free is done automatically on stage transition
 #define malloc(n) __nwa__FUl((n))
@@ -256,8 +364,6 @@ float J2DPrint_GetWidth(J2DPrint* j2dprint, char* text);
 void J2DPrint_Initiate(J2DPrint* j2dprint);
 void J2DPrint_Print(J2DPrint* j2dprint, int x, int y, char* text, int u1, int u2, int u3);
 void J2DPrint_Delete(J2DPrint* j2dprint, int mask);
-
-static JUTResFont* DiscErrorFont = (JUTResFont*)0x812fef60;
 
 #define GameFont (*(ResFONT**)((*(int*)(SceneReference - 0x6038)) + 0x48))
 #define GameStrTable (RTOC - 19304)
@@ -301,8 +407,8 @@ typedef ObjItemManager{
 	bool (*HasMapCollision)();
 }*/
 
-register void* RTOC	asm ("r2");
-register void* SceneReference asm ("r13");
+register void* RTOC	__asm ("r2");
+register void* SceneReference __asm ("r13");
 
 // GC
 //static void (*GXSetBlendMode)(int a1, int a2, int a3, int a4) = (void*)0x80361dd0;
@@ -314,9 +420,18 @@ static const Controller* ControllerTwo = (Controller*)0x80404460;
 static const Controller* ControllerThree = (Controller*)0x8040446c;
 static const Controller* ControllerFour = (Controller*)0x80404478;
 
+static MarioGamePad* GamePads = (MarioGamePad*)0x8057738c;
+static MarioGamePad* GamePadOne = (MarioGamePad*)0x8057738c;
+static MarioGamePad* GamePadTwo = (MarioGamePad*)0x8057748c;
+static MarioGamePad* GamePadThree = (MarioGamePad*)0x8057758c;
+static MarioGamePad* GamePadFour = (MarioGamePad*)0x8057768c;
+
+void MarioGamePad_Read();
+void MarioGamePad_Update(MarioGamePad* pad);
+void MarioGamePad_Reset(MarioGamePad* pad);
+
 static void* gpSystemFont = (void*)0x8040e188;
 static void* gpRomFont = (void*)0x8040e18c;
-static void* gpItemManager = (void*)0x8040df10;
 
 // SMS
 static void* gpApplication = (void*)0x803e9700;
@@ -335,11 +450,12 @@ void CleanPollution(PollutionManager* pollution, float x, float y, float z, floa
 
 // Stage
 static MarDirector** gpMarDirector = (void*)0x8040e178;
+static void** gpItemManager = (void**)0x8040df10;
 static void** gpMap = (void*)0x8040de98;
 static PollutionManager** gpPollution = (void*)0x8040ded0;
 static void** gpStrategy = (void*)0x8040e080;
-
-void IsPolluted(void);
+static void** gpSunManager = (void*)0x8040d0c0;
+static HitActor** gpSunModel = (void*)0x8040d0c8;
 
 static uint8_t* ChangeScenario = (void*)0x003e9712;
 static uint8_t* ChangeEpisode = (void*)0x003e9713;
@@ -348,8 +464,16 @@ HitActor* SearchF(void* namereflist, int keycode, char* ref);
 #define SearchObjByRef(ref) SearchF((void*)*(((int*)*(int*)(SceneReference - 0x5db8)) + 1), CalcKeyCode((ref)), (ref))
 int GetShineStage(uint8_t stageid);
 
-// Mario
+int IsPolluted(void);
+
+//Camera
 static HitActor** gpCamera = (void*)0x8040d0a8;
+void Camera_AddMultiPlayer(void* camera, Vector* position);
+void Camera_RemoveMultiPlayer(void* camera, Vector* position);
+void Camera_CreateMultiPlayer(void* camera, unsigned char players);
+
+// Mario
+static HitActor** gpMarioOriginal = (void*)0x8040e0e8;
 static HitActor** gpMarioAddress = (void*)0x8040e108;
 #define GetFludd(mario) (HitActor*)((mario) + 0x03E4)
 static Vector** gpMarioPos = (void*)0x8040e10c;
@@ -369,8 +493,7 @@ HitActor* GetMarioYoshi();
 int GetMarioHP();
 int GetMarioStatus();
 int GetMarioStatusFromHitActor(MarioActor* mario);
-void ChangeMarioStatus(MarioActor* mario, int u1, int u2, int u3); 
-void incGoldCoinFlag(uint32_t coinptr, int stage, int amount);
+void IncGoldCoinFlag(uint32_t coinptr, int stage, int amount);
 #define IncrementCoin(amount) incGoldCoinFlag(*(int*)(SceneReference - 0x6060), GetShineStage((*(int*)(gpApplication + 0x0E)) & 0xFF), (amount))
 void GetMarioMapPosition();
 void ThrowMario(void*, void*, float, float, float);
@@ -382,7 +505,19 @@ void SetMarioStatus(MarioActor* mario, int a2, int a3, int a4);
 void EmitSweat(MarioActor* mario);
 void Fludd_Emit(HitActor* fludd);
 void Mario_StartVoice(MarioActor* mario, int id);
-void WearGlasses(MarioActor* mario);
+void Mario_SetGamePad(MarioActor* mario, MarioGamePad* gamepad);
+void Mario_CheckController(HitActor* mario, void* drama, void* graphics);
+void Mario_ReceiveMessage(MarioActor* mario, HitActor* other, unsigned long message);
+void Mario_PlayerControl(MarioActor* mario, void* drama, void* graphics);
+void Mario_CheckCollision(MarioActor* mario);
+void Mario_DamageExec(MarioActor* mario, HitActor* other, int u1, int u2, int u3, float f1, int u4, float f2, short u5);
+void Mario_IncHP(MarioActor* mario, int n);
+void Mario_DecHP(MarioActor* mario, int n);
+void EnemyMario_CheckController(HitActor* enemymario, void* drama, void* graphics);
+void SetMarioVelocity(MarioActor* mario, float vel);
+void StartTrembleEffect(TrembleModelEffect* effectmgr, float maxTremble, float minTremble, float damp, int timer);
+void Mario_WearGlasses(MarioActor* mario);
+#define GetMarioTrembleEffect(mario) ((TrembleModelEffect*)*((void**)(mario) + 0x014F))
 
 #define MARIOMSG_THROW		0x07
 #define MARIOMSG_HURTFIRE	0x0a
@@ -390,7 +525,6 @@ void WearGlasses(MarioActor* mario);
 void SendMsgToMario(MarioActor* mario, int msg);
 
 // Objects
-static void* ItemManager = (void*)0x8107e3a4;
 #define OBJ_WATER			0x20000002
 #define OBJ_ONEUP			0x20000006
 #define OBJ_COIN			0x2000000E
@@ -398,7 +532,7 @@ static void* ItemManager = (void*)0x8107e3a4;
 #define OBJ_ROCKETNOZZLE	0x20000022
 #define OBJ_HOVERNOZZLE		0x20000026
 #define OBJ_TURBONOZZLE		0x2000002A
-HitActor* MakeObjAppear(const void* itemManager, int id);
+HitActor* MakeObjAppear(ItemManager* itemManager, int id);
 
 // Effects
 void GenerateEffectElectric(HitActor* pos);
@@ -406,9 +540,7 @@ void GenerateEffectElectric(HitActor* pos);
 // Music / SFX
 void PlaySound(int rate, Sound* sfx, int nl1, int nl2, int nl3, int four);
 void StartStageEntranceDemoSeq(int u1, int u2);
-void startBGM(int u1);
-void stopBGM(int u1);
-
-void DraweMarioHP(MarioActor* emario);
+void StartBGM(int u1);
+void StopBGM(int u1);
 
 #endif

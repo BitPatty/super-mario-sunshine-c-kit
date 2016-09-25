@@ -1,29 +1,32 @@
 # Super Mario Sunshine - C Kit
-A WIP C library for everyone's favorite game: Super Mario Sunshine.
-
-TODO: Add more examples.. (Please)
-TODO: Actually fix the code listed in the main example.
+A WIP C library for everyone's favorite game: Super Mario Sunshine. The tools in this will allow you to compile C code which can be patched into Super Mario Sunshine.
 
 #What can this do? 
 
-You can make Gecko code modifications in C for Super Mario Sunshine, and Super Mario Sunshine only, for now. (I'll probably make another kit for some other games in the future, though only me working on them; I don't want to involve Miluaces into the pain. ^ ^' ) 
+The library allows you to compile PPC code that replace functions and interact with objects in Super Mario Sunshine. The code can be either put into a gecko code with a max size of 229 lines or be patched into Super Mario Sunshine's Start.dol.
 
+This is only for Super Mario Sunshine at the moment. (I'll probably make another kit for some other games in the future, though only me working on them; I don't want to involve Miluaces into the pain. ^ ^' ) 
 
 #Neato!... Well, how do I set this up? 
 
-First, you need to install devkitPro in order for your code to compile, and don't forget to set up the environment for devkitPPC. (Ex., C:\devkitPro\devkitPPC\bin) You can install the lib anywhere on your computer, as long as a folder in the file path doesn't contain any spaces. To compile your code, simply drag your C code file into build.bat. 
+0. Clone or download the c kit.
+0. Install devkitPro for PPC somewhere on your harddrive. The batch files are set up for it to be located at C:\devkitPro\devkitPPC, but you can edit the batch files to account for your install location.
+0. If you want to patch Start.dol, extract it from your Super Mario Sunshine image and copy it into the c kit directory.
+0. To compile C code, drag the source file onto build.bat for a gecko code or patchdol.bat to patch Start.dol. 
+0. The gecko code should be copied into your clipboard or a new .dol file with your source files name will be created.
 
 
 #Alright. Do you have any examples to show? 
 
 Yes, actually. Here's an item spawning example from Miluaces: 
 
+```
 include "sms.h"
 
-static int laststate __attribute__((section(".sdata"))); //Last state
+int laststate; //Last state
 
 int OnUpdate(MarDirector* director) {	
-	int (*GameUpdate)(MarDirector* director) = (void*)*(void**)((int)*(int*)director + 0x64);
+	int (*GameUpdate)(MarDirector* director) = GetObjectFunction(director, Director_GameUpdate);
 	
 	MarioActor* mario = GetMarioHitActor();
 	ItemActor* item = 0;
@@ -62,11 +65,15 @@ int OnUpdate(MarDirector* director) {
 	
 	return GameUpdate(director);
 }
+```
+
+There are more examples in the repository.
 
 #My code compiled! What do I do now? 
 
-That's good! The Gecko code should have automatically been copied to your clipboard. (Thanks Miluaces :D ) With that, you should now be able to paste that into your cheat code list in Dolphin and play your modification! 
+Either build a new SMS image with your dol file or enter your gecko code to see your code run in game.
 
 --- 
 
-More examples and updates to the lib will surely come at the right moment. Stick around in the IRC channel #sunshinerealm in irc.nolimitzone.com/6667 to meet and converse with the Sunshine Realm crew and see updates on current SMS modifications, big or small.
+More examples and updates to the lib will surely come at the right moment. For support with this check out the Blastsoft Studios Discord ( https://discord.gg/mN9nf ).
+Also visit SMS Realm ( http://smsrealm.net/board/ ) to discuss SMS hacking with other users.

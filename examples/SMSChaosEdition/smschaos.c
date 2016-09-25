@@ -12,16 +12,15 @@
 /* 4 effects can occur at the same time
  * Boring effects removed
  * Fixed some crashes
- * A few optimizations for space because of 229 byte limit
+ * A few optimizations for space because of 225 line limit
  */
 
-//Static variables don't take up code space
-static int timer[4] __attribute__((section(".sdata")));			//Effect timers
-static int currentEffect[4] __attribute__((section(".sdata")));	//Current effects
-static int val[4] __attribute__((section(".sdata")));			//Effect values
-static int oval[4] __attribute__((section(".sdata")));			//Effect reset values
-static Vector lastposition __attribute__((section(".sdata")));	//Stage start position
-static MarioActor* mario __attribute__((section(".sdata")));	//Mario
+int timer[4];			//Effect timers
+int currentEffect[4];	//Current effects
+int val[4];				//Effect values
+int oval[4];			//Effect reset values
+Vector lastposition;	//Stage start position
+MarioActor* mario;		//Mario
 
 //Runs every frame
 int OnUpdate(MarDirector* director) {	
