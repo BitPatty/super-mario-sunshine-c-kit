@@ -13,7 +13,7 @@
 
 /* This code is always running, and is constantly updating. */
 J2DTextBox textbox;
-char* info;
+
 
 bool inAir;
 int timesjumped;
@@ -59,10 +59,7 @@ void OnDraw2D(J2DOrthoGraph* graphics)
 	/* Here are his states that we read. 
 	   If Mario is doing said action, the return should be 1.
 	*/
-	snprintf(info, 128, "Time x %d", time);
-	
-	// now we set our string to a J2DTextBox
-	J2DTextBox_SetString(&textbox, info);
+	snprintf(J2DTextBox_GetStringPtr(&textbox), 128, "Time x %d", time);
 			 
 	//Run replaced branch
 	J2DGrafContext_Setup2D((J2DGrafContext*)graphics);	
@@ -92,6 +89,10 @@ void OnSetup(MarDirector* director)
 	JUTRect_Set(&rect, timerx, timery, 800, 512);
 	//textbox = (J2DTextBox*)malloc(sizeof(J2DTextBox));
 	J2DTextBox_Create(&textbox, 0, &rect, GameFont, GameStrTable, 2, 0);
+	
+	char* info;
+	info = (char*)malloc(128);
+	J2DTextBox_SetString(&textbox, info);
 	
 	void (*TestNull)(void) = 0x80247fa4;
 	TestNull();
