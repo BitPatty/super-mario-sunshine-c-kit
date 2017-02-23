@@ -6,7 +6,7 @@
 #include "sms.h"
 
 static J2DTextBox textbox;
-static char* info;
+
 int OnUpdate(MarDirector* director) {	
 	int (*GameUpdate)(MarDirector* director) = GetObjectFunction(director, Director_GameUpdate);
 	
@@ -19,9 +19,8 @@ void OnDraw2D(J2DOrthoGraph* graphics)
 {
 	Vector mariopos = **gpMarioPos;
 	int state = GetMarioStatus();
-	snprintf(info, 128, "Mario X: %f\nMario Y: %f\nMario Z: %f\nMario State: %X\nNext Stage: %d-%d", 
+	snprintf(J2DTextBox_GetStringPtr(&textbox), 128, "Mario X: %f\nMario Y: %f\nMario Z: %f\nMario State: %X\nNext Stage: %d-%d", 
 			 mariopos.x, mariopos.y, mariopos.z, state, *ChangeScenario, *ChangeEpisode);
-	J2DTextBox_SetString(&textbox, info);
 			 
 	J2DGrafContext_Setup2D((J2DGrafContext*)graphics);	//Run replaced branch
 	
@@ -39,5 +38,8 @@ void OnSetup(MarDirector* director)
 	//textbox = (J2DTextBox*)malloc(sizeof(J2DTextBox));
 	J2DTextBox_Create(&textbox, 0, &rect, GameFont, GameStrTable, 2, 0);
 	
+	char* info;	
 	info = (char*)malloc(128);
+	
+	J2DTextBox_SetString(&textbox, info);
 }
