@@ -2,7 +2,7 @@
  * Empty c file demonstrating available functions the Bin2Gecko and DolInsert tools can replace
  */
 
-#include "sms.h"
+#include "inc/sms.h"
 
 //Variable
 int variable;

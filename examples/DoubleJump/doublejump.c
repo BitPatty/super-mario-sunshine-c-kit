@@ -1,4 +1,4 @@
-#include "sms.h"
+#include "inc/sms.h"
 
 int doublejumped;
 int preva;

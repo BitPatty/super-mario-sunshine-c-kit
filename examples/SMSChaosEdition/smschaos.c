@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include <math.h>
-#include "sms.h"
+#include "inc/sms.h"
 
 //This version is different from the released version:
 /* 4 effects can occur at the same time
