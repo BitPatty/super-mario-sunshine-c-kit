@@ -43,7 +43,7 @@ int OnUpdate(MarDirector* director) {
 	}
 	
 	// If no dpad buttons are pressed, reset laststate
-	if (!(ControllerOne-> buttons & (PRESS_DU | PRESS_DL | PRESS_DR | PRESS_DD)))
+	if (!(ControllerOne->buttons & (PRESS_DU | PRESS_DL | PRESS_DR | PRESS_DD)))
 		laststate = 0;
 	
 	//If item was assigned, set it up
