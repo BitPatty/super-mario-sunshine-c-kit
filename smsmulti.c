@@ -128,7 +128,7 @@ int OnUpdate(MarDirector* director) {
 				if (Controllers[i].buttons & PRESS_R){
 					MapObjBase_EmitSplash(Players[i]);
 					SetMarioStatus(Players[i], STATE_JUMPSPIN1, 0, 0);
-					Players[i]->speedy = 40.0f;
+					Players[i]->speed.y = 40.0f;
 					WaterSprayTimer[i] = 0;
 				}
 			}
@@ -167,7 +167,7 @@ int OnUpdate(MarDirector* director) {
 				Players[i]->position.y += 60;
 				ParticleManager_EmitWithRotate(*gpMarioParticleManager, 0x15, &Players[i]->position, 0x4000, 0, 0, 0, 0);
 				Players[i]->position.y += 240;
-				Players[i]->speedy = 0.0f;
+				Players[i]->speed.y = 0.0f;
 			}
 		}
 	}
@@ -504,7 +504,7 @@ void BounceMario(MarioActor* mario1, MarioActor* mario2){
 	temp.y = 0.5f;
 	temp.z = 0.5f;
 	
-	mario1->speedy = 300.0f;
+	mario1->speed.y = 300.0f;
 	Mario_SetAnimation(mario1, 211, 1.0f);	//triple trample animation
 	SetMarioStatus(mario1, 0x02000890, 0, 0);
 	Mario_SetStatusToJumping(mario1, 0x02000890, 0);
@@ -515,7 +515,7 @@ void BounceMario(MarioActor* mario1, MarioActor* mario2){
 	rstatus = mario2->status & 0xFFFFFFF0;
 	if (rstatus == STATE_JUMPSPIN || rstatus == STATE_JUMP || rstatus == STATE_JUMPSIDE)
 	{
-		mario2->speedy = -mario1->speedy;
+		mario2->speed.y = -mario1->speed.y;
 	}
 	
 	RemoveObjectFromColArray(mario1, mario2);
@@ -560,7 +560,7 @@ void OnCheckActorsHit(void* hitcheckobj){
 		for (int i = 0; i < NUM_PLAYERS; i++){
 			if (Players[i] == 0)
 				continue;
-			if (Players[i]->speedy > 0)
+			if (Players[i]->speed.y > 0)
 				continue;
 			if ((int)Players[i]->colarray & 0x80000000 == 0)
 				continue;
@@ -657,7 +657,7 @@ void OnMarioThrow(HitActor* thrownobject){
 			
 			float speed = sqrtf((**gpMarioSpeedX * **gpMarioSpeedX) + (**gpMarioSpeedZ * **gpMarioSpeedZ));
 			SetMarioVelocity(Players[i], 40.0f + speed);
-			Players[i]->speedy = 75.0f;
+			Players[i]->speed.y = 75.0f;
 		}
 		if (HeldPlayer[i] == thrownobject)
 			HeldPlayer[i] = 0;
