@@ -1,13 +1,13 @@
 # Super Mario Sunshine - C Kit
 A WIP C library for everyone's favorite game: Super Mario Sunshine. The tools in this will allow you to compile C code which can be patched into Super Mario Sunshine.
 
-#What can this do? 
+## What can this do? 
 
 The library allows you to compile PPC code that replace functions and interact with objects in Super Mario Sunshine. The code can be either put into a gecko code with a max size of 229 lines or be patched into Super Mario Sunshine's Start.dol.
 
 This is only for Super Mario Sunshine at the moment. (I'll probably make another kit for some other games in the future, though only me working on them; I don't want to involve Miluaces into the pain. ^ ^' ) 
 
-#Neato!... Well, how do I set this up? 
+## Neato!... Well, how do I set this up? 
 
 0. Clone or download the c kit.
 0. Install devkitPro for PPC somewhere on your harddrive. The batch files are set up for it to be located at C:\devkitPro\devkitPPC, but you can edit the batch files to account for your install location.
@@ -69,7 +69,7 @@ int OnUpdate(MarDirector* director) {
 
 There are more examples in the repository.
 
-#My code compiled! What do I do now? 
+## My code compiled! What do I do now? 
 
 Either build a new SMS image with your dol file or enter your gecko code to see your code run in game.
 
