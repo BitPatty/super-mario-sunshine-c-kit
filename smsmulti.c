@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include <math.h>
-#include "sms.h"
+#include "inc/sms.h"
 
 #define NUM_PLAYERS 2
 
