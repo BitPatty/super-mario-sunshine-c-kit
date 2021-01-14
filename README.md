@@ -1,11 +1,11 @@
+> Note: This repository was forked from MasterF0x whose GitHub Account disappeared and doesn't represent the code from the original repository 100% (it was about 8 commits ahead / 8 behind when the repository disappeared). If YOU happen to have a backup of the latest version from their original code please let me know.
+
 # Super Mario Sunshine - C Kit
-A WIP C library for everyone's favorite game: Super Mario Sunshine. The tools in this will allow you to compile C code which can be patched into Super Mario Sunshine.
+A C library for everyone's favorite game: Super Mario Sunshine. The tools in this will allow you to compile C code which can be patched into Super Mario Sunshine.
 
 #What can this do? 
 
 The library allows you to compile PPC code that replace functions and interact with objects in Super Mario Sunshine. The code can be either put into a gecko code with a max size of 229 lines or be patched into Super Mario Sunshine's Start.dol.
-
-This is only for Super Mario Sunshine at the moment. (I'll probably make another kit for some other games in the future, though only me working on them; I don't want to involve Miluaces into the pain. ^ ^' ) 
 
 #Neato!... Well, how do I set this up? 
 
@@ -73,7 +73,4 @@ There are more examples in the repository.
 
 Either build a new SMS image with your dol file or enter your gecko code to see your code run in game.
 
---- 
 
-More examples and updates to the lib will surely come at the right moment. For support with this check out the Blastsoft Studios Discord ( https://discord.gg/mN9nf ).
-Also visit SMS Realm ( http://smsrealm.net/board/ ) to discuss SMS hacking with other users.
