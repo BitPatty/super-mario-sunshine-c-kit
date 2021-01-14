@@ -16,7 +16,7 @@ The library allows you to compile PPC code that replace functions and interact w
 3. To compile C code, drag the source file onto build.bat for a gecko code or patchdol.bat to patch Start.dol.
 4. The gecko code should be copied into your clipboard or a new .dol file with your source files name will be created.
 
-#Alright. Do you have any examples to show?
+## Alright. Do you have any examples to show?
 
 Yes, actually. Here's an item spawning example from Miluaces:
 
